@@ -1,0 +1,141 @@
+<%- include('head'); -%>
+<h1> 输入会员信息 </h1>
+<form class="form-vertical" action="newMember" method="POST">
+    <div class="row input-sm">
+
+        <div class="form-group col-xs-6">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="memberNum">会员卡号</label>
+            <input type="text" class="form-control" id="memberNum" name="memberNum" readonly value=<%= memberNum %> >
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="sex">姓别</label>
+            <select class="form-control" id="sex" name="sex">
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="memberCardType">会员卡类型</label>
+            <select class="form-control" id="memberCardType" name="memberCardType">
+                <option value="1">月卡</option>
+                <option value="2">季卡</option>
+                <option value="3">年卡</option>
+            </select>
+        </div>
+
+
+        <div class="form-group col-xs-6">
+            <label for="createDate">开卡日期</label>
+            <input type="date" class="form-control" id="createDate" name="createDate">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="expirationDate">到期时间</label>
+            <input type="date" class="form-control" id="expirationDate" name="expirationDate">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="contractNum">合同号</label>
+            <input type="text" class="form-control" id="contractNum" name="contractNum">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="receiptNum">收据号</label>
+            <input type="text" class="form-control" id="receiptNum" name="receiptNum">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="money">金额</label>
+            <input type="number" class="form-control" id="money" name="money" value="9999">
+        </div>
+
+
+        <div class="form-group col-xs-6">
+            <label for="certificateType">证件类型</label>
+            <select class="form-control" id="certificateType" name="certificateType">
+                <option value="1">身份证</option>
+                <option value="2">驾驶证</option>
+            </select>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="certificateNum">证件号</label>
+            <input type="text" class="form-control" id="certificateNum" name="certificateNum">
+        </div>
+
+
+        <div class="form-group col-xs-6">
+            <label for="birthday">生日</label>
+            <input type="datetime" class="form-control" id="birthday" name="birthday">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="phoneNum">电话</label>
+            <input type="tel" class="form-control" id="phoneNum" name="phoneNum">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="email">电子邮箱</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="nationality">国籍</label>
+            <select name="nationality" id="nationality" class="form-control">
+                <% var countries = ['中国', '美国', '英国'] %>
+                <% countries.forEach(function(country) {%>
+                    <option value=<%=country%> > <%=country%> </option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="homeAddress">家庭地址</label>
+            <input type="text" class="form-control" id="homeAddress" name="homeAddress">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="emergencyContractPerson">紧急联系人</label>
+            <input type="text" class="form-control" id="emergencyContractPerson" name="emergencyContractPerson">
+        </div>
+
+        <div class="form-group col-xs-12">
+            <label for="organization">工作单位</label>
+            <input type="text" class="form-control" id="organization" name="organization">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="membershipConsultant">会籍顾问</label>
+            <input type="text" class="form-control" id="membershipConsultant" name="membershipConsultant">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="verifyPassword">确认密码</label>
+            <input type="password" class="form-control" id="verifyPassword" name="verifyPassword">
+        </div>
+
+        <!--提交按钮-->
+        <div class="form-group col-xs-12">
+            <input class="form-control" type="submit" value="创建会员">
+        </div>
+
+    </div>
+</form>
+
+<script>
+    var createDate = document.getElementById('createDate');
+    createDate.valueAsDate = new Date();
+</script>
+<%- include('footer'); -%>
