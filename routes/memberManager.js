@@ -7,7 +7,7 @@ var Member = mongoose.model('Member');
 
 function MemberManager(app) {
 	this.app = app;
-	mongoose.connect('mongodb://localhost/ljh');
+	//mongoose.connect('mongodb://localhost/ljh');
 }
 
 var mm = new MemberManager();
@@ -20,7 +20,7 @@ module.exports = mm;
  * @return {[type]}     [description]
  */
 MemberManager.prototype.showList = function(req, res) {
-	
+
 	var q = Member.find();
 	q.exec(function(err, results) {
 		res.render('memberList', {title: '会员列表', memberList: results});
@@ -72,11 +72,12 @@ MemberManager.prototype.input  = function(req, res) {
  */
 MemberManager.prototype.newMember = function(req, res) {
 
+    req.body.createDate = new Date();
 	Member.create(req.body, function(err) {
 		if (err) {
 			throw err;
 		}
-		
+
 		var q = Member.find();
 		q.exec(function(err, results) {
 		 	if (err) {
@@ -87,7 +88,7 @@ MemberManager.prototype.newMember = function(req, res) {
 		});
 	});
 
-	
+
 };
 
 

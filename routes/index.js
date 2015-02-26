@@ -4,6 +4,6 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+  res.render('login', { title: '乐键汇会员管理系统-登录' });
 };
 

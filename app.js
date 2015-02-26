@@ -14,7 +14,7 @@ var app = express();
 var memberManager = require('./routes/memberManager');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 36000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -32,6 +32,7 @@ if ('development' === app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.post('/login', user.login);
 
 app.get('/member/showList', memberManager.showList);
 app.get('/member/inputNum', memberManager.inputNum);
