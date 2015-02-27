@@ -20,13 +20,12 @@ module.exports = userManager;
 
 UserManager.prototype.login = function(req, res) {
 
-
-    var name = req.body.user;
+    var user = req.body.user;
     var password = req.body.password;
 
     async.waterfall([
         function(cb) {
-            User.findOne({'name': name},function(e, result) {
+            User.findOne({'user': user},function(e, result) {
                 if (e) {
                     throw e;
                 }
@@ -41,16 +40,23 @@ UserManager.prototype.login = function(req, res) {
 
         function(user, cb) {
             if (user.password === password) {
-                cb(null);
+                cb(null, user);
             } else {
                 cb('密码不正确');
             }
         }
-    ], function(e) {
+    ], function(e, user) {
         if (e) {
             res.end(e);
             return
         }
-        res.redirect('/member/inputNum');
+
+        req.session.user = user;
+        res.redirect('/member/showList');
     });
+};
+
+UserManager.prototype.loginout = function(req, res) {
+    req.session.user = null;
+    res.redirect('/');
 };

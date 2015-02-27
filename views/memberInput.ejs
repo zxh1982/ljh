@@ -1,16 +1,12 @@
 <%- include('head'); -%>
+
 <h1> 输入会员信息 </h1>
-<form class="form-vertical" action="newMember" method="POST">
-    <div class="row input-sm">
+<form id="memberInfoForm" class="form-vertical well" action="newMember" method="POST">
+    <div class="row">
 
         <div class="form-group col-xs-6">
             <label for="name">姓名</label>
             <input type="text" class="form-control" id="name" name="name">
-        </div>
-
-        <div class="form-group col-xs-6">
-            <label for="memberNum">会员卡号</label>
-            <input type="text" class="form-control" id="memberNum" name="memberNum" readonly value=<%= memberNum %> >
         </div>
 
         <div class="form-group col-xs-6">
@@ -22,8 +18,15 @@
         </div>
 
         <div class="form-group col-xs-6">
-            <label for="memberCardType">会员卡类型</label>
-            <select class="form-control" id="memberCardType" name="memberCardType">
+            <label for="memberNum">会员卡号</label>
+            <input type="text" class="form-control" id="memberNum" name="memberNum" readonly value=<%= memberNum %> >
+        </div>
+
+
+
+        <div class="form-group col-xs-6">
+            <label for="cardType">会员卡类型</label>
+            <select class="form-control" id="cardType" name="cardType">
                 <option value="1">月卡</option>
                 <option value="2">季卡</option>
                 <option value="3">年卡</option>
@@ -37,25 +40,19 @@
         <!--</div>-->
 
         <div class="form-group col-xs-6">
+            <label for="contractNum">合同号</label>
+            <input type="text" class="form-control" id="contractNum" name="contractNum" readonly value=<%= contractNum %> >
+        </div>
+
+        <div class="form-group col-xs-6">
             <label for="expirationDate">到期时间</label>
             <input type="date" class="form-control" id="expirationDate" name="expirationDate">
         </div>
 
-        <div class="form-group col-xs-6">
-            <label for="contractNum">合同号</label>
-            <input type="text" class="form-control" id="contractNum" name="contractNum">
-        </div>
-
-        <div class="form-group col-xs-6">
-            <label for="receiptNum">收据号</label>
-            <input type="text" class="form-control" id="receiptNum" name="receiptNum">
-        </div>
-
-        <div class="form-group col-xs-6">
-            <label for="money">金额</label>
-            <input type="number" class="form-control" id="money" name="money" value="9999">
-        </div>
-
+        <!--<div class="form-group col-xs-6">-->
+            <!--<label for="receiptNum">收据号</label>-->
+            <!--<input type="text" class="form-control" id="receiptNum" name="receiptNum">-->
+        <!--</div>-->
 
         <div class="form-group col-xs-6">
             <label for="certificateType">证件类型</label>
@@ -68,6 +65,14 @@
         <div class="form-group col-xs-6">
             <label for="certificateNum">证件号</label>
             <input type="text" class="form-control" id="certificateNum" name="certificateNum">
+        </div>
+
+
+
+
+        <div class="form-group col-xs-6">
+            <label for="currentMoney">金额</label>
+            <input type="number" class="form-control" id="currentMoney" name="currentMoney" value="0">
         </div>
 
 
@@ -84,6 +89,17 @@
         <div class="form-group col-xs-6">
             <label for="email">电子邮箱</label>
             <input type="email" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+
+        <div class="form-group col-xs-6">
+            <label for="verifyPassword">确认密码</label>
+            <input type="password" class="form-control" id="verifyPassword">
         </div>
 
         <div class="form-group col-xs-6">
@@ -106,36 +122,72 @@
             <input type="text" class="form-control" id="emergencyContractPerson" name="emergencyContractPerson">
         </div>
 
-        <div class="form-group col-xs-12">
-            <label for="organization">工作单位</label>
-            <input type="text" class="form-control" id="organization" name="organization">
-        </div>
-
-        <div class="form-group col-xs-6">
-            <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-
         <div class="form-group col-xs-6">
             <label for="membershipConsultant">会籍顾问</label>
             <input type="text" class="form-control" id="membershipConsultant" name="membershipConsultant">
         </div>
 
-        <div class="form-group col-xs-6">
-            <label for="verifyPassword">确认密码</label>
-            <input type="password" class="form-control" id="verifyPassword" name="verifyPassword">
+        <div class="form-group col-xs-12">
+            <label for="organization">工作单位</label>
+            <input type="text" class="form-control" id="organization" name="organization">
         </div>
 
         <!--提交按钮-->
-        <div class="form-group col-xs-12">
-            <input class="form-control" type="submit" value="创建会员">
-        </div>
+        <!--<div class="form-group col-xs-12">-->
+            <!--<input class="form-control" type="submit" value="创建会员">-->
+        <!--</div>-->
 
     </div>
 </form>
 
+    <button id="submit" class="btn btn-default" style="width: 100%">
+        创建会员
+    </button>
 <script>
-    var createDate = document.getElementById('createDate');
-    createDate.valueAsDate = new Date();
+
+    function setFocus(id) {
+        $(id).focus();
+        $(id).select();
+    }
+
+    $('#submit').click(function() {
+        //验证金额
+        var str = $('#currentMoney').val();
+        var currentMoney = parseInt(str);
+        if (str != currentMoney || currentMoney <= 0 || currentMoney > 99999) {
+            alert("金额格式不正确！请重新输入");
+            setFocus('#currentMoney');
+            return;
+        }
+
+        //验证电话
+        str = $('#phoneNum').val();
+        var reg = /^1[358][0-9]{9}$/;
+        if (!reg.test(str)) {
+            alert("手机号格式不正确！请重新输入");
+            setFocus('#phoneNum');
+            return;
+        }
+
+        //验证证件号，只检查是否为空
+        str = $('#certificateNum').val();
+        if (!str) {
+            alert("证件号不能为空！请重新输入");
+            setFocus('#certificateNum');
+            return;
+        }
+
+        //验证密码
+        var password = $("#password").val();
+        var verifyPassword = $("#verifyPassword").val();
+        if (!password || password !== verifyPassword) {
+            alert("密码不正确！请重新输入");
+            setFocus('#password');
+            return;
+        }
+
+        $("#memberInfoForm").submit();
+    });
+
 </script>
 <%- include('footer'); -%>

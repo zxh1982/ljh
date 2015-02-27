@@ -7,17 +7,16 @@
 
 
 <%- include('contract'); -%>
-
+<br>
 <div>
-    <button class="btn btn-primary btn-lg">
+    <button id="printContract" class="btn btn-primary">
         打印合同
     </button>
 
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    <button id="newMemberButton" class="btn btn-primary">
         创建会员
     </button>
 </div>
-
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,11 +42,6 @@
                         <label>合同号</label>
                         <input class="form-control" type="text" id="contractNum" name="contractNum">
                     </div>
-
-                    <div class="form-group">
-                        <label>收据号</label>
-                        <input class="form-control" type="text" id="receiptNum" name="receiptNum">
-                    </div>
                 </form>
 
             </div>
@@ -68,14 +62,37 @@
         var memberNum = $("#memberNum").val();
         if (memberNum) {
             $('#newMember').submit();
+            $('#memberNum').val("");
+            $('#contractNum').val("");
         }
+    });
+
+    $('#newMemberButton').click(function() {
+        $('#myModal').modal('show');
+        setTimeout(function() {
+            $('#memberNum').focus();
+        }, 500);
+
     });
 
     $("#memberNum").keyup(function(event) {
         if (event.keyCode === 13) {
             $("#submit").click();
         }
-    })
+    });
+
+    $('#printContract').click(function() {
+        $.get('/member/getContractNum',function(data) {
+            $("#contractNumStr").text(function() {
+                return data;
+            });
+
+            $("#contractNum").val(data);
+            $("#contractNum").attr("readOnly", true);
+
+            $('#contract').jqprint();
+        });
+    });
 </script>
 
 <%- include('footer'); -%>

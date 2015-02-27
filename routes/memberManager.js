@@ -1,13 +1,13 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var sprintf = require('../public/javascripts/sprintf');
 require('./schema/member')();
 
 var Member = mongoose.model('Member');
 
 function MemberManager(app) {
 	this.app = app;
-	//mongoose.connect('mongodb://localhost/ljh');
 }
 
 var mm = new MemberManager();
@@ -23,7 +23,7 @@ MemberManager.prototype.showList = function(req, res) {
 
 	var q = Member.find();
 	q.exec(function(err, results) {
-		res.render('memberList', {title: '会员列表', memberList: results});
+		res.render('memberList', {title: '会员列表', user: req.session.user, memberList: results});
 	});
 };
 
@@ -35,6 +35,7 @@ MemberManager.prototype.inputNum = function(req, res) {
 
 MemberManager.prototype.enterInput = function(req, res) {
     var memberNum = req.body.memberNum;
+    var contractNum = req.body.contractNum;
     if (!memberNum) {
         return;
     }
@@ -45,7 +46,7 @@ MemberManager.prototype.enterInput = function(req, res) {
         }
         console.log(results);
         if (!results) {
-            res.redirect('/member/input?memberNum=' + memberNum);
+            res.redirect('/member/input?memberNum=' + memberNum + "&contractNum=" + contractNum);
         } else {
             res.end('卡号: ' + memberNum + '已经存在！');
         }
@@ -61,8 +62,18 @@ MemberManager.prototype.enterInput = function(req, res) {
  */
 MemberManager.prototype.input  = function(req, res) {
 	var memberNum = req.query.memberNum;
-	res.render('memberInput', {title: '新建会员', memberNum: memberNum});
+    var contractNum = req.query.contractNum;
+	res.render('memberInput', {title: '新建会员', memberNum: memberNum, contractNum: contractNum});
 };
+
+MemberManager.prototype.getContractNum = function(req, res) {
+    Member.find().count(function(err, count) {
+        if (err) throw err;
+        var str= sprintf("%06s", count);
+        res.end(str);
+    });
+};
+
 
 /**
  * [newMember 新建会员]
@@ -73,6 +84,9 @@ MemberManager.prototype.input  = function(req, res) {
 MemberManager.prototype.newMember = function(req, res) {
 
     req.body.createDate = new Date();
+    req.body.cardStatus = 0;
+    req.body.operator = req.session.user.name;
+    req.body.shopName = "总店";
 	Member.create(req.body, function(err) {
 		if (err) {
 			throw err;

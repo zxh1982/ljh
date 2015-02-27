@@ -2,7 +2,12 @@
 
     <div class="panel">
         <div class="btn btn-lg">
-            <p ><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User </p>
+            <p id="name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+               <% if (user) { %>
+                <%= user.name %>
+               <% } %>
+            </p>
+            <span class="label label-info">online</span>
         </div>
     </div>
 
