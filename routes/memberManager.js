@@ -21,12 +21,29 @@ module.exports = mm;
  */
 MemberManager.prototype.showList = function(req, res) {
 
-	var q = Member.find();
-	q.exec(function(err, results) {
-		res.render('memberList', {title: '会员列表', user: req.session.user, memberList: results});
-	});
+    var q = Member.aggregate([
+        {
+            $group: {
+                _id:null,
+                currentMoney: {$sum: "$currentMoney"},
+                expenseMoney: { $sum: "$expenseMoney" }
+            }
+        }
+    ]);
+
+    q.exec(function(err, result) {
+        res.render('memberList', {title:'会员列表',  aggregate:result[0], user: req.session.user});
+    })
+
 };
 
+MemberManager.prototype.getMembers = function(req, res) {
+    var q = Member.find();
+    q.exec(function(err, results) {
+        res.send(results);
+        res.end();
+    });
+};
 
 
 MemberManager.prototype.inputNum = function(req, res) {

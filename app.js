@@ -71,9 +71,11 @@ app.get('/member/inputNum', memberManager.inputNum);
 app.get('/member/input', authentication);
 app.get('/member/input', memberManager.input);
 app.get('/member/getContractNum', memberManager.getContractNum);
+app.get('/member/getMembers', memberManager.getMembers);
 
 app.post('/member/newMember', memberManager.newMember);
 app.post('/member/enterInput', memberManager.enterInput);
+
 
 
 function authentication(req, res, next) {
