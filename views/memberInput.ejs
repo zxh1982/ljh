@@ -184,7 +184,7 @@
         }
 
         //验证到期时间
-        var date = $("#expirationDate");
+        var date = $("#expirationDate").val();
         var now = new Date();
         if (!date || date < now ) {
             alert("到期时间不正确！请重新输入");
