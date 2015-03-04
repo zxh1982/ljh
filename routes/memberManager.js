@@ -47,14 +47,14 @@ MemberManager.prototype.getMembers = function(req, res) {
 
 
 MemberManager.prototype.inputNum = function(req, res) {
-    res.render('inputCardNum', {title: '输入卡号'});
+    res.render('inputCardNum', {title: '新建会员'});
 };
 
 MemberManager.prototype.enterInput = function(req, res) {
     var memberNum = req.body.memberNum;
-    var contractNum = req.body.contractNum;
+
     if (!memberNum) {
-        return;
+        return res.redirect('/member/inputNum');
     }
 
     Member.findOne({memberNum: memberNum}, function(err, results) {
@@ -63,7 +63,13 @@ MemberManager.prototype.enterInput = function(req, res) {
         }
         console.log(results);
         if (!results) {
-            res.redirect('/member/input?memberNum=' + memberNum + "&contractNum=" + contractNum);
+
+            Member.find().count(function(err, count) {
+                if (err) throw err;
+                var str= sprintf("%06s", count);
+                res.redirect('/member/input?memberNum=' + memberNum + "&contractNum=" + str);
+            });
+
         } else {
             res.end('卡号: ' + memberNum + '已经存在！');
         }
@@ -108,22 +114,23 @@ MemberManager.prototype.newMember = function(req, res) {
 		if (err) {
 			throw err;
 		}
-
-		var q = Member.find();
-		q.exec(function(err, results) {
-		 	if (err) {
-		 		throw err;
-		 	}
-            res.redirect('/member/showList');
-		 	//res.end(JSON.stringify(results));
-		});
+        delete req.body.password;
+        var jsonString = JSON.stringify(req.body);
+        res.redirect('/member/contract?memberNum=' + req.body.memberNum);
 	});
-
-
 };
 
+MemberManager.prototype.contract = function(req, res) {
+    var q = Member.findOne({'memberNum': req.query.memberNum});
+    q.exec(function(err, result) {
+        if (err) {
+            throw  err;
+        }
 
+        delete result.password;
+        res.render('contract', {title: '会员合同', member: result});
+    });
 
-
+};
 
 

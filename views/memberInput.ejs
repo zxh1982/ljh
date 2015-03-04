@@ -54,21 +54,18 @@
             <!--<input type="text" class="form-control" id="receiptNum" name="receiptNum">-->
         <!--</div>-->
 
-        <div class="form-group col-xs-6">
-            <label for="certificateType">证件类型</label>
-            <select class="form-control" id="certificateType" name="certificateType">
-                <option value="1">身份证</option>
-                <option value="2">驾驶证</option>
-            </select>
-        </div>
+        <!--<div class="form-group col-xs-6">-->
+            <!--<label for="certificateType">证件类型</label>-->
+            <!--<select class="form-control" id="certificateType" name="certificateType">-->
+                <!--<option value="1">身份证</option>-->
+                <!--<option value="2">驾驶证</option>-->
+            <!--</select>-->
+        <!--</div>-->
 
         <div class="form-group col-xs-6">
             <label for="certificateNum">证件号</label>
             <input type="text" class="form-control" id="certificateNum" name="certificateNum">
         </div>
-
-
-
 
         <div class="form-group col-xs-6">
             <label for="currentMoney">金额</label>
@@ -183,6 +180,15 @@
         if (!password || password !== verifyPassword) {
             alert("密码不正确！请重新输入");
             setFocus('#password');
+            return;
+        }
+
+        //验证到期时间
+        var date = $("#expirationDate");
+        var now = new Date();
+        if (!date || date < now ) {
+            alert("到期时间不正确！请重新输入");
+            setFocus('#expirationDate');
             return;
         }
 

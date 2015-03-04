@@ -1,4 +1,4 @@
-
+<%- include('head'); -%>
 
 <style type="text/css">
     #contract{
@@ -23,19 +23,19 @@
             <b><span style="font-size:18px;font-family:宋体;">会员协议</span></b>
         </h1>
         <h1 style="text-align:right;">
-            <b><span style="font-size:10.0pt;font-family:宋体;"><span style="font-size:14px;">合同号：</span><span style="font-size:14px;">LJHXY</span><span style="font-size:14px;">（</span><span style="font-size:14px;">2015</span><span style="font-size:14px;">）</span><span style="font-size:14px;" id="contractNumStr">******</span></span></b><b><span style="font-family:宋体;font-size:14px;">&nbsp;</span></b>
+            <b><span style="font-size:10.0pt;font-family:宋体;"><span style="font-size:14px;">合同号：</span><span style="font-size:14px;">LJHXY</span><span style="font-size:14px;">（</span><span style="font-size:14px;">2015</span><span style="font-size:14px;">）</span><span style="font-size:14px;" ><%= member.contractNum %> </span></span></b><b><span style="font-family:宋体;font-size:14px;">&nbsp;</span></b>
         </h1>
         <p class="MsoNormal">
-            <span style="font-family:宋体;font-size:14px;">姓名：</span><span style="font-family:微软雅黑;font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family:宋体;font-size:14px;">性别：</span><span style="font-family:微软雅黑;"></span>
+            <span style="font-family:宋体;font-size:14px;">姓名：<%= member.name %> </span><span style="font-family:微软雅黑;font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family:宋体;font-size:14px;">性别：<%= member.sex===1? '男' : '女' %></span><span style="font-family:微软雅黑;"></span>
         </p>
         <p class="MsoNormal">
-            <span style="font-family:宋体;font-size:14px;">身份证号码：</span><span style="font-family:微软雅黑;"></span>
+            <span style="font-family:宋体;font-size:14px;">身份证号码：<%= member.certificateNum %> </span><span style="font-family:微软雅黑;"></span>
         </p>
         <p class="MsoNormal">
-            <span style="font-family:宋体;font-size:14px;">家庭地址：</span><span style="font-family:微软雅黑;"></span>
+            <span style="font-family:宋体;font-size:14px;">家庭地址：<%= member.homeAddress %></span><span style="font-family:微软雅黑;"></span>
         </p>
         <p class="MsoNormal">
-            <span style="font-family:宋体;font-size:14px;">联系方式：</span><span style="font-family:微软雅黑;"></span>
+            <span style="font-family:宋体;font-size:14px;">联系方式：<%= member.phoneNum %></span><span style="font-family:微软雅黑;"></span>
         </p>
         <p class="MsoNormal">
             <span style="font-family:微软雅黑;font-size:14px;">&nbsp;</span>
@@ -43,49 +43,49 @@
         <p class="MsoNormal">
             <span style="font-family:宋体;font-size:14px;">购买会员卡如下：</span><span style="font-family:微软雅黑;"></span>
         </p>
-        <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;">
+        <table class="table table-bordered">
             <tbody>
             <tr>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
                         <span style="font-family:宋体;font-size:14px;">会员卡号</span><span style="font-family:微软雅黑;"></span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
                         <span style="font-family:宋体;font-size:14px;">会员种类</span><span style="font-family:微软雅黑;"></span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
                         <span style="font-family:宋体;font-size:14px;">金额</span><span style="font-family:微软雅黑;"></span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
                         <span style="font-family:宋体;font-size:14px;">有效期</span><span style="font-family:微软雅黑;"></span>
                     </p>
                 </td>
             </tr>
             <tr>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
-                        <span style="font-family:微软雅黑;font-size:14px;">&nbsp;</span>
+                        <span style="font-family:微软雅黑;font-size:14px;"><%= member.memberNum %></span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
-                        <span style="font-family:微软雅黑;font-size:14px;">&nbsp;</span>
+                        <span style="font-family:微软雅黑;font-size:14px;"><%=  ['','月卡','季卡','年卡'][member.cardType] %></span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
-                        <span style="font-family:微软雅黑;font-size:14px;">&nbsp;</span>
+                        <span style="font-family:微软雅黑;font-size:14px;"> <%= member.currentMoney%> </span>
                     </p>
                 </td>
-                <td width="107" style="border:solid windowtext 1.5pt;">
+                <td width="107">
                     <p class="MsoNormal" align="center" style="text-align:center;">
-                        <span style="font-family:微软雅黑;font-size:14px;">&nbsp;</span>
+                        <span style="font-family:微软雅黑;font-size:14px;"> <%= member.expirationDate.toLocaleDateString() %> </span>
                     </p>
                 </td>
             </tr>
@@ -420,3 +420,14 @@
         </p>
     </div>
 </div>
+<br>
+
+<button id="printContract" type="button" class="btn btn-primary">
+    打印
+</button>
+
+<script>
+    $('#printContract').click(function() {
+        $('#contract').jqprint();
+    });
+</script>

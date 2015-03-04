@@ -72,7 +72,7 @@ app.get('/member/input', authentication);
 app.get('/member/input', memberManager.input);
 app.get('/member/getContractNum', memberManager.getContractNum);
 app.get('/member/getMembers', memberManager.getMembers);
-
+app.get('/member/contract', memberManager.contract);
 app.post('/member/newMember', memberManager.newMember);
 app.post('/member/enterInput', memberManager.enterInput);
 

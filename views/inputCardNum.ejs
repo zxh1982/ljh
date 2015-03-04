@@ -6,18 +6,6 @@
 </style>
 
 
-<%- include('contract'); -%>
-<br>
-<div>
-    <button id="printContract" class="btn btn-primary">
-        打印合同
-    </button>
-
-    <button id="newMemberButton" class="btn btn-primary">
-        创建会员
-    </button>
-</div>
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -38,17 +26,17 @@
                         <input class="form-control" type="text" id="memberNum" name="memberNum">
                     </div>
 
-                    <div class="form-group">
-                        <label>合同号</label>
-                        <input class="form-control" type="text" id="contractNum" name="contractNum">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label>合同号</label>-->
+                        <!--<input class="form-control" type="text" id="contractNum" name="contractNum">-->
+                    <!--</div>-->
                 </form>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    关闭
-                </button>
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">-->
+                    <!--关闭-->
+                <!--</button>-->
                 <button id="submit" type="button" class="btn btn-primary">
                     提交
                 </button>
@@ -57,13 +45,12 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
-
+    $('#myModal').modal({keyboard: true});
     $("#submit").click(function() {
         var memberNum = $("#memberNum").val();
         if (memberNum) {
             $('#newMember').submit();
             $('#memberNum').val("");
-            $('#contractNum').val("");
         }
     });
 
@@ -81,18 +68,18 @@
         }
     });
 
-    $('#printContract').click(function() {
-        $.get('/member/getContractNum',function(data) {
-            $("#contractNumStr").text(function() {
-                return data;
-            });
-
-            $("#contractNum").val(data);
-            $("#contractNum").attr("readOnly", true);
-
-            $('#contract').jqprint();
-        });
-    });
+//    $('#printContract').click(function() {
+//        $.get('/member/getContractNum',function(data) {
+//            $("#contractNumStr").text(function() {
+//                return data;
+//            });
+//
+//            $("#contractNum").val(data);
+//            $("#contractNum").attr("readOnly", true);
+//
+//            $('#contract').jqprint();
+//        });
+//    });
 </script>
 
 <%- include('footer'); -%>
