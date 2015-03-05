@@ -190,7 +190,7 @@
             setFocus('#expirationDate');
             return;
         }
-        $("#memberInfoForm").submit();
+
 
         //验证会籍
         str = $("#membershipConsultant").val();
@@ -199,6 +199,8 @@
             setFocus('#membershipConsultant');
             return;
         }
+
+        $("#memberInfoForm").submit();
     });
 
 </script>
