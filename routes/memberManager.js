@@ -109,6 +109,7 @@ MemberManager.prototype.newMember = function(req, res) {
     req.body.createDate = new Date();
     req.body.cardStatus = 0;
     req.body.operator = req.session.user.name;
+    req.body.password = '123456';
     req.body.shopName = "总店";
 	Member.create(req.body, function(err) {
 		if (err) {

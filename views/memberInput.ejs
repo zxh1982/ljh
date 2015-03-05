@@ -75,7 +75,7 @@
 
         <div class="form-group col-xs-6">
             <label for="birthday">生日</label>
-            <input type="datetime" class="form-control" id="birthday" name="birthday">
+            <input type="date" class="form-control" id="birthday" name="birthday">
         </div>
 
         <div class="form-group col-xs-6">
@@ -88,16 +88,16 @@
             <input type="email" class="form-control" id="email" name="email">
         </div>
 
-        <div class="form-group col-xs-6">
-            <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
+        <!--<div class="form-group col-xs-6">-->
+            <!--<label for="password">密码</label>-->
+            <!--<input type="password" class="form-control" id="password" name="password">-->
+        <!--</div>-->
 
 
-        <div class="form-group col-xs-6">
-            <label for="verifyPassword">确认密码</label>
-            <input type="password" class="form-control" id="verifyPassword">
-        </div>
+        <!--<div class="form-group col-xs-6">-->
+            <!--<label for="verifyPassword">确认密码</label>-->
+            <!--<input type="password" class="form-control" id="verifyPassword">-->
+        <!--</div>-->
 
         <div class="form-group col-xs-6">
             <label for="nationality">国籍</label>
@@ -166,6 +166,14 @@
             return;
         }
 
+        //验证生日
+        var date = document.getElementById('birthday').valueAsDate;//$("#birthday").val();
+        if (!date) {
+            alert("生日时期不正确！请重新输入");
+            setFocus('#birthday');
+            return;
+        }
+
         //验证证件号，只检查是否为空
         str = $('#certificateNum').val();
         if (!str) {
@@ -174,25 +182,23 @@
             return;
         }
 
-        //验证密码
-        var password = $("#password").val();
-        var verifyPassword = $("#verifyPassword").val();
-        if (!password || password !== verifyPassword) {
-            alert("密码不正确！请重新输入");
-            setFocus('#password');
-            return;
-        }
-
         //验证到期时间
-        var date = $("#expirationDate").val();
+        var date = document.getElementById('expirationDate');//$("#expirationDate").val();
         var now = new Date();
         if (!date || date < now ) {
             alert("到期时间不正确！请重新输入");
             setFocus('#expirationDate');
             return;
         }
-
         $("#memberInfoForm").submit();
+
+        //验证会籍
+        str = $("#membershipConsultant").val();
+        if (!str) {
+            alert("会籍顾问不能为空！请重新输入");
+            setFocus('#membershipConsultant');
+            return;
+        }
     });
 
 </script>
