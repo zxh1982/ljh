@@ -2,12 +2,17 @@
 <style>
     .aggregate>span{
         margin-right:2px;
-        font-size: 16px;
+        font-size: 14px;
     }
     .aggregate{
         position:absolute;
         top:20px;
         width:500px;
+    }
+    #dateRange{
+        position:absolute;
+        top:18px;
+        left: 410px;
     }
 </style>
 <!--<a class="btn btn-success" href="/member/inputNum">新建会员</a>-->
@@ -23,7 +28,27 @@
         总收入 <%= aggregate.currentMoney + aggregate.currentMoney %>
     </span>
 
+    <span class="label label-success">
+        人数 <%= aggregate.memberCount %>
+    </span>
+
 </div>
+
+<div id="dateRange" class="btn-group btn-group-xs" role="group">
+    <button type="button" id="dateRange0" class="btn btn-default">全部</button>
+    <button type="button" id="dateRange1" class="btn btn-default">今天</button>
+    <button type="button" id="dateRange2" class="btn btn-default">本周</button>
+    <button type="button" id="dateRange3" class="btn btn-default">本月</button>
+</div>
+
+<!--<nav>-->
+    <!--<ul class="pagination pagination-sm">-->
+        <!--<li><a href="#">全部</a></li>-->
+        <!--<li><a href="#">本日</a></li>-->
+        <!--<li><a href="#">本周</a></li>-->
+        <!--<li><a href="#">本月</a></li>-->
+    <!--</ul>-->
+<!--</nav>-->
 
 <table data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-toggle="table" data-sort-name="createDate" data-sort-order="desc" class="table-condensed table-striped " data-url='getMembers' data-row-style="rowStyle" data-cache="false" data-height="640">
     <thead>
@@ -83,7 +108,34 @@
         function statusFormatter(value) {
             return value===1 ? '已激活' : '未激活'
         }
+
+//        $('#refresh').click(function () {
+//            $table.bootstrapTable('refresh', {
+//                url: 'getMembers'
+//            });
+//        });
     </script>
 </table>
+
+<script>
+
+    $("#dateRange>button").click(function(event) {
+        var url = 'getMembers?dateRange=' + event.srcElement.id;
+        console.log(url);
+        $("table").bootstrapTable('refresh', {
+            url: url
+        });
+
+        $.get('statistics?dateRange=' + event.srcElement.id, function(data) {
+            console.log(data);
+            var elements = $(".aggregate>span");
+            elements[0].innerText = '总计余额 ' + data.currentMoney;
+            elements[1].innerText = '总计消费 ' + data.expenseMoney;
+            elements[2].innerText = '总收入 '   +  (data.currentMoney + data.currentMoney)
+            elements[3].innerText = '人数' + data.memberCount;
+        });
+    });
+
+</script>
 
 <%- include('footer'); -%>

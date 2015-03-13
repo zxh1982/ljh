@@ -21,27 +21,97 @@ module.exports = mm;
  */
 MemberManager.prototype.showList = function(req, res) {
 
-    var q = Member.aggregate([
-        {
-            $group: {
-                _id:null,
-                currentMoney: {$sum: "$currentMoney"},
-                expenseMoney: { $sum: "$expenseMoney" }
-            }
+    var start = getStartDate(req.query);
+    var array = [{
+        $group: {
+            _id:null,
+            currentMoney: { $sum: "$currentMoney" },
+            expenseMoney: { $sum: "$expenseMoney" }
         }
-    ]);
+    }];
+
+    if (start) {
+        array.unshift(
+            {
+                $match : { 'createDate' : { $gt: start, $lte : new Date()} }
+            }
+        );
+    }
+
+    var q = Member.aggregate(array);
 
     q.exec(function(err, result) {
-        res.render('memberList', {title:'会员列表',  aggregate:result[0], user: req.session.user});
-    })
 
+        Member.find(start ? {'createDate' : { $gt: start, $lte : new Date()}} : {}).count(function(err, count) {
+            if (result[0]) {
+                result[0].memberCount = count;
+                console.log(result[0]);
+                res.render('memberList', {title:'会员列表',  aggregate:result[0], user: req.session.user});
+            }
+        })
+    })
+};
+
+MemberManager.prototype.statistics = function(req, res) {
+    var start = getStartDate(req.query);
+    var array = [{
+        $group: {
+            _id:null,
+            currentMoney: { $sum: "$currentMoney" },
+            expenseMoney: { $sum: "$expenseMoney" }
+        }
+    }];
+
+    if (start) {
+        array.unshift(
+            {
+                $match : { 'createDate' : { $gt: start, $lte : new Date()} }
+            }
+        );
+    }
+
+    var q = Member.aggregate(array);
+
+    q.exec(function(err, result) {
+
+        Member.find(start ? {'createDate' : { $gt: start, $lte : new Date()}} : {}).count(function(err, count) {
+            if (result[0]) {
+                result[0].memberCount = count;
+                console.log(result[0]);
+                res.json(result[0]);
+            }
+        })
+    })
+};
+
+function getStartDate (query) {
+    var now = new Date();
+    var start = new Date(now);
+    start.setHours(0,0,0);
+    if (query.dateRange === 'dateRange1') {
+
+    } else if (query.dateRange === 'dateRange2') {
+        start.setDate(start.getDate() - start.getDay() + 1);//本周
+    } else if (query.dateRange === 'dateRange3') {
+        start.setDate(0);//本用
+    } else {
+        start = null;
+    }
+    return start;
 };
 
 MemberManager.prototype.getMembers = function(req, res) {
-    var q = Member.find();
+    var now = new Date();
+    var start = getStartDate(req.query);
+    var q;
+    if (start) {
+        q = Member.find({'createDate':{'$gt':start, '$lt':now}});
+    } else {
+        q = Member.find();
+    }
+
     q.exec(function(err, results) {
-        res.send(results);
-        res.end();
+        res.json(results);
     });
 };
 

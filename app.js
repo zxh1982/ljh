@@ -67,6 +67,7 @@ app.get('/member/showList', memberManager.showList);
 
 app.get('/member/inputNum', authentication);
 app.get('/member/inputNum', memberManager.inputNum);
+app.get('/member/statistics', memberManager.statistics);
 
 app.get('/member/input', authentication);
 app.get('/member/input', memberManager.input);
