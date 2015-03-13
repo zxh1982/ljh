@@ -12,7 +12,7 @@
     #dateRange{
         /*position:absolute;*/
         top:-20px;
-        left: 40px;
+        left: 480px;
     }
 </style>
 <!--<a class="btn btn-success" href="/member/inputNum">新建会员</a>-->
@@ -130,10 +130,10 @@
         $.get('statistics?dateRange=' + event.srcElement.id, function(data) {
             console.log(data);
             var elements = $(".aggregate>span");
-            elements[0].innerText = '总计余额 ' + data.currentMoney;
-            elements[1].innerText = '总计消费 ' + data.expenseMoney;
-            elements[2].innerText = '总收入 '   +  (data.currentMoney + data.currentMoney)
-            elements[3].innerText = '人数' + data.memberCount;
+            elements[0].innerText = '总计余额 ' + (data.currentMoney || 0);
+            elements[1].innerText = '总计消费 ' + (data.expenseMoney || 0);
+            elements[2].innerText = '总收入 '   +  ((data.currentMoney + data.currentMoney) || 0);
+            elements[3].innerText = '人数' + (data.memberCount || 0);
         });
     });
 

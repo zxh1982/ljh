@@ -79,6 +79,8 @@ MemberManager.prototype.statistics = function(req, res) {
                 result[0].memberCount = count;
                 console.log(result[0]);
                 res.json(result[0]);
+            } else {
+                res.json('{}');
             }
         })
     })
